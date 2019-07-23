@@ -1,0 +1,38 @@
+.body {
+    width: 100vw;
+    height: 100vh;
+}
+.maze-div {
+    margin: 10vh auto;
+    display: flex;
+    flex-direction: column;
+}
+.canvas-div {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.button-div {
+    width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.maze-div h1 {
+    margin: 0 auto;
+}
+.button {
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 7px;
+}
+.button:focus {
+    outline: none;
+}
+.canvas {
+    margin: 0 auto;
+}
+.canvas:focus {
+    outline: none;
+}
