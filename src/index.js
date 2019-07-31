@@ -25,7 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
     reset.onclick = function res() {
         grid.reset();
     }
+
 });
+
+
 
 
 

@@ -10,6 +10,11 @@ class Cell {
             LEFT: true
         };
         
+        this.keyUp = false;
+        this.keyRight = false;
+        this.keyDown = false;
+        this.keyLeft = false;
+        
         this.visited = false;
     }
 

@@ -1,5 +1,5 @@
 const Cell = require("./cell");
-
+const Player = require("./player");
 
 class Grid {
     constructor(){
@@ -8,9 +8,12 @@ class Grid {
         this.w = 40; // size of the cell
         this.grid = [];
         this.drawCoolDown = 0;
-        this.drawCoolDownDefault = 7;  // generation speed
+        this.drawCoolDownDefault = 1;  // generation speed
         this.current = null;
         this.next = null;
+        this.player = new Player(this.w, this.grid);
+        this.endCell = null;
+        this.max = 0;
 
         this.stack = [];
 
@@ -19,17 +22,24 @@ class Grid {
 
     highlight(ctx) {
         if (this.stack.length > 0) {
-            if (this.generate) {let x = this.current.i * this.w;
+            if (this.generate) {
+                let x = this.current.i * this.w;
                 let y = this.current.j * this.w;
-                if (this.generate) {
+                if ( this.generate ) {
                     ctx.fillStyle = this.getRandomColor();
                 } else {
                     ctx.fillStyle = "#000000";
-
                 }
                 ctx.fillRect(x, y, this.w, this.w);
             }
         } 
+        if( this.endCell ) {
+            let end_x = this.endCell.i * this.w;
+            let end_y = this.endCell.j * this.w;
+            ctx.fillStyle = this.getRandomColor();
+            ctx.fillRect(end_x + 5, end_y + 5, this.w - 10, this.w - 10);
+        }
+        
     }
 
     reset() {
@@ -42,7 +52,10 @@ class Grid {
             this.grid[i].walls["LEFT"] = true;
         }
         this.stack = [];
-        this.current = this.grid[Math.floor(this.grid.length / 2)];
+        this.endCell = null;
+        this.current = this.grid[Math.floor(Math.random() * this.grid.length)];
+        this.player.i = this.current.i;
+        this.player.j = this.current.j;
     }
 
     setup(ctx) {
@@ -55,11 +68,16 @@ class Grid {
             }
         }
 
-        this.current = this.grid[Math.floor(this.grid.length / 2)];
+        this.current = this.grid[Math.floor(Math.random() * this.grid.length)];
+        this.player.i = this.current.i;
+        this.player.j = this.current.j;
+        
     };
 
     draw(ctx) {
         if(this.drawCoolDown === 0) {
+            // console.log(`x = ${this.player.i}`)
+            // console.log(`y = ${this.player.j}`)
             ctx.clearRect(0, 0, ctx.width, ctx.height);
             // ctx.fillStyle = this.getRandomColor();
             ctx.fillStyle = "#000000";
@@ -69,7 +87,10 @@ class Grid {
             }
             if (this.generate) {
                 this.generateMaze();
+            } else {
+                this.player.canMove = false;
             }
+            this.player.show(ctx);
             this.highlight(ctx);
             this.drawCoolDown = this.drawCoolDownDefault;
         }
@@ -85,6 +106,10 @@ class Grid {
             this.next.visited = true;
             // STEP 2.1.2 of recursive backtraker algorithm
             this.stack.push(this.current);
+            if (this.max < this.stack.length) {
+                this.max = this.stack.length;
+                this.endCell = this.current;
+            }
             // STEP 2.1.3 of recursive backtracker algorithm
             if (this.current && this.next) {
                 this.removeWalls(this.current, this.next);
