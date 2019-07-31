@@ -8,7 +8,7 @@ class Grid {
         this.w = 40; // size of the cell
         this.grid = [];
         this.drawCoolDown = 0;
-        this.drawCoolDownDefault = 1;  // generation speed
+        this.drawCoolDownDefault = 7;  // generation speed
         this.current = null;
         this.next = null;
         this.player = new Player(this.w, this.grid);
@@ -38,6 +38,13 @@ class Grid {
             let end_y = this.endCell.j * this.w;
             ctx.fillStyle = this.getRandomColor();
             ctx.fillRect(end_x + 5, end_y + 5, this.w - 10, this.w - 10);
+        }
+        if (this.grid.every((i) => {
+            return i.visited === true;
+        })) {
+            if (this.player.i === this.endCell.i && this.player.j === this.endCell.j) {
+                this.reset();
+            }
         }
         
     }

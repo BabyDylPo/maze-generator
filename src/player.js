@@ -43,28 +43,35 @@ class Player {
       
     movement(ctx) {
         let cols = Math.floor(ctx.canvas.width / this.w);
+        let current = this.grid[this.index(this.i, this.j, cols)]
+        let walls = {
+            TOP: current.walls["TOP"],
+            RIGHT: current.walls["RIGHT"],
+            BOTTOM: current.walls["BOTTOM"],
+            LEFT: current.walls["LEFT"]
+        };
         if (this.keyUp) {
             this.canMove = false;
             this.next = this.grid[this.index(this.i, this.j - 1, cols)]; //next is the cell above player
-            if (this.next) {
+            if (this.next && !walls["TOP"]) {
                 this.i = this.next.i;
                 this.j = this.next.j;
             }
-        } else if (this.keyRight) {
+        } else if (this.keyRight && !walls["RIGHT"]) {
             this.next = this.grid[this.index(this.i + 1, this.j, cols)]; //this.next is the cell above player
             this.canMove = false;
             if (this.next) {
                 this.i = this.next.i;
                 this.j = this.next.j;
             }
-        } else if (this.keyDown) {
+        } else if (this.keyDown && !walls["BOTTOM"]) {
             this.next = this.grid[this.index(this.i, this.j + 1, cols)]; //this.next is the cell above player
             this.canMove = false;
             if (this.next) {
                 this.i = this.next.i;
                 this.j = this.next.j;
             }
-        } else if (this.keyLeft) {
+        } else if (this.keyLeft && !walls["LEFT"]) {
             this.next = this.grid[this.index(this.i - 1, this.j, cols)]; //this.next is the cell above player
             this.canMove = false;
             if (this.next) {
