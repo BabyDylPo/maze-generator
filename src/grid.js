@@ -82,9 +82,8 @@ class Grid {
     };
 
     draw(ctx) {
+        this.player.movement(ctx);
         if(this.drawCoolDown === 0) {
-            // console.log(`x = ${this.player.i}`)
-            // console.log(`y = ${this.player.j}`)
             ctx.clearRect(0, 0, ctx.width, ctx.height);
             // ctx.fillStyle = this.getRandomColor();
             ctx.fillStyle = "#000000";
@@ -145,7 +144,7 @@ class Grid {
             current.walls["BOTTOM"] = false;
             next.walls["TOP"] = false;
         } else {
-            console.log("error with removing walls")
+            alert ("error with removing walls")
         }
 
     }

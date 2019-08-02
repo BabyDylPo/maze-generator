@@ -20,16 +20,6 @@ class Player {
         let j = this.j * this.w;
         ctx.fillStyle = this.getRandomColor();
         ctx.fillRect(i + 5, j + 5, this.w - 10, this.w - 10);
-        if (this.canMove) {
-            this.movement(ctx);
-        }
-        if (this.grid.stack && this.grid.stack.length) {
-            this.canMove = false;
-        } else {
-            if (!this.keyUp && !this.keyRight && !this.keyDown && !this.keyLeft) {
-                this.canMove = true;
-            }
-        }
     };
 
     getRandomColor() {
@@ -42,6 +32,18 @@ class Player {
     }
       
     movement(ctx) {
+        if (this.canMove) {
+            this._movement(ctx);
+        }
+        if (this.grid.stack && this.grid.stack.length) {
+            this.canMove = false;
+        } else {
+            if (!this.keyUp && !this.keyRight && !this.keyDown && !this.keyLeft) {
+                this.canMove = true;
+            }
+        }
+    }
+    _movement(ctx) {
         let cols = Math.floor(ctx.canvas.width / this.w);
         let current = this.grid[this.index(this.i, this.j, cols)]
         let walls = {

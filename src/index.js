@@ -1,4 +1,3 @@
-console.log("webpack is working");
 const Grid = require("./grid");
 const GameLoop = require("./game_loop");
 
