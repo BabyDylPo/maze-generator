@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/BabyDylPo/maze-generator/issues"
   },
-  "homepage": "https://github.com/BabyDylPo/maze-generator#readme"
+  "homepage": "https://github.com/BabyDylPo/maze-generator#readme",
+  "engines": {
+    "node": "12.5.0",
+    "npm": "6.9.0"
+  }
 }
