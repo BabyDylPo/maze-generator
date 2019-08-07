@@ -5,7 +5,7 @@ class Grid {
     constructor(){
         this.cols = 0;
         this.rows = 0;
-        this.w = 40; // size of the cell
+        this.w = 25; // size of the cell
         this.grid = [];
         this.drawCoolDown = 0;
         this.drawCoolDownDefault = 7;  // generation speed
@@ -84,7 +84,7 @@ class Grid {
     draw(ctx) {
         this.player.movement(ctx);
         if(this.drawCoolDown === 0) {
-            ctx.clearRect(0, 0, ctx.width, ctx.height);
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.height);
             // ctx.fillStyle = this.getRandomColor();
             ctx.fillStyle = "#000000";
             ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -99,6 +99,27 @@ class Grid {
             this.player.show(ctx);
             this.highlight(ctx);
             this.drawCoolDown = this.drawCoolDownDefault;
+
+            // outline border for entire grid //
+            ////////////////////////////////////
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = this.getRandomColor();
+            ///////////////  TOP  /////////////////////
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0 + ctx.canvas.width, 0);
+            //////////////  RIGHT  ///////////////////
+            ctx.moveTo(0 + ctx.canvas.width, 0);
+            ctx.lineTo(0 + ctx.canvas.height, 0 + ctx.canvas.height);
+            //////////////  BOTTOM  //////////////////
+            ctx.moveTo(0 + ctx.canvas.height, 0 + ctx.canvas.height);
+            ctx.lineTo(0, 0 + ctx.canvas.width);
+            ///////////////  LEFT  ///////////////////
+            ctx.moveTo(0, 0 + ctx.canvas.height);
+            ctx.lineTo(0, 0);
+            //////////////////////////////////////////
+            ctx.stroke();
+            ctx.lineWidth = 1;
         }
         this.drawCoolDown--;
     };
