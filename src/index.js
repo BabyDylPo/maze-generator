@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const generate = document.getElementById("generate");
     const reset = document.getElementById("reset");
     
-    canvas.width = 600;
-    canvas.height = 600;
+    canvas.width = 500;
+    canvas.height = 500;
     // canvas.style.zIndex = 1;
 
     const ctx = canvas.getContext("2d");
